@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://c80sfcaehn67q"]
+
+[ext_resource type="PackedScene" uid="uid://doeh47f2ysf4t" path="res://character/character.tscn" id="1_fsll6"]
+[ext_resource type="Texture2D" uid="uid://dcldheiy6r7j2" path="res://assets/art/characters/enemy_punk.png" id="2_8u7dt"]
+[ext_resource type="Script" uid="uid://chbrygfkqfv48" path="res://character/basic_enemy.gd" id="2_12mcf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_12mcf"]
+radius = 2.0
+height = 8.0
+
+[sub_resource type="Animation" id="Animation_8u7dt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p73c2"]
+resource_name = "hurt"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [40, 41, 42]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_12mcf"]
+resource_name = "idle"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_y340o"]
+resource_name = "walk"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p73c2"]
+_data = {
+&"RESET": SubResource("Animation_8u7dt"),
+&"hurt": SubResource("Animation_p73c2"),
+&"idle": SubResource("Animation_12mcf"),
+&"walk": SubResource("Animation_y340o")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y340o"]
+size = Vector2(6, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12mcf"]
+size = Vector2(10, 10)
+
+[node name="BasicEnemy" unique_id=1136997134 instance=ExtResource("1_fsll6")]
+collision_layer = 4
+collision_mask = 12
+script = ExtResource("2_12mcf")
+max_health = 20
+damage = 2
+knockback_intensity = 50.0
+speed = 30.0
+
+[node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
+texture = ExtResource("2_8u7dt")
+centered = false
+offset = Vector2(-24, -48)
+hframes = 10
+vframes = 10
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=622436207]
+position = Vector2(0, -1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_12mcf")
+
+[node name="AnimationPlayer" parent="." index="3" unique_id=855980877]
+libraries/ = SubResource("AnimationLibrary_p73c2")
+autoplay = &"idle"
+
+[node name="DamageEmitter" parent="." index="4" unique_id=366140428]
+position = Vector2(8, -12)
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=1138871281]
+shape = SubResource("RectangleShape2D_y340o")
+
+[node name="DamageReceiver" parent="." index="5" unique_id=295269071]
+position = Vector2(0, -19)
+collision_layer = 32
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=785931373]
+shape = SubResource("RectangleShape2D_12mcf")
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]

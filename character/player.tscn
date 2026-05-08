@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://sjtnkdp7bob0"]
 
 [ext_resource type="PackedScene" uid="uid://doeh47f2ysf4t" path="res://character/character.tscn" id="1_2orxn"]
+[ext_resource type="Script" uid="uid://0xaxxtv4yu1f" path="res://character/player.gd" id="2_aypkh"]
 [ext_resource type="Texture2D" uid="uid://cxg8d6qg72u72" path="res://assets/art/characters/player.png" id="2_monf5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_monf5"]
@@ -246,8 +247,17 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aypkh"]
 size = Vector2(10, 6)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhoun"]
+size = Vector2(7, 7)
+
 [node name="Player" unique_id=1136997134 instance=ExtResource("1_2orxn")]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("2_aypkh")
+max_health = 30
+damage = 5
 jump_intensity = 150.0
+speed = 40.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
 texture = ExtResource("2_monf5")
@@ -272,4 +282,12 @@ collision_mask = 96
 position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_aypkh")
 
+[node name="DamageReceiver" parent="." index="5" unique_id=295269071]
+position = Vector2(1, -19)
+collision_layer = 16
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=785931373]
+shape = SubResource("RectangleShape2D_hhoun")
+
 [editable path="DamageEmitter"]
+[editable path="DamageReceiver"]

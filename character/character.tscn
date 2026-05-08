@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://csveg0b7o270a" path="res://character/character.gd" id="1_ugqs2"]
 [ext_resource type="Texture2D" uid="uid://d0jo43xa8ljw5" path="res://assets/art/characters/shadow.png" id="1_yf0e5"]
 [ext_resource type="PackedScene" uid="uid://cvv3rt3dg7d2d" path="res://collider/damage_emitter.tscn" id="2_1l1n4"]
+[ext_resource type="PackedScene" uid="uid://bu56rotycv16f" path="res://collider/damage_receiver.tscn" id="4_hx151"]
 
 [node name="Character" type="CharacterBody2D" unique_id=1136997134]
 script = ExtResource("1_ugqs2")
@@ -18,4 +19,7 @@ texture = ExtResource("1_yf0e5")
 
 [node name="DamageEmitter" parent="." unique_id=366140428 instance=ExtResource("2_1l1n4")]
 
+[node name="DamageReceiver" parent="." unique_id=295269071 instance=ExtResource("4_hx151")]
+
 [editable path="DamageEmitter"]
+[editable path="DamageReceiver"]

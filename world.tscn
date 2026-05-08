@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://clkw0cjkogk2n" path="res://Scene/stage.tscn" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://sjtnkdp7bob0" path="res://character/player.tscn" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cied00xqkcwuh" path="res://props/barrel.tscn" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://c80sfcaehn67q" path="res://character/basic_enemy.tscn" id="5_036b0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqk2v"]
 size = Vector2(6, 64)
@@ -18,12 +19,17 @@ y_sort_enabled = true
 
 [node name="Player" parent="ActorContainer" unique_id=1136997134 instance=ExtResource("2_fj7yv")]
 position = Vector2(40, 41)
-health = 50
-damage = 5
-speed = 40.0
 
 [node name="Barrel" parent="ActorContainer" unique_id=512899097 instance=ExtResource("3_tlwt5")]
 position = Vector2(79, 45)
+
+[node name="BasicEnemy" parent="ActorContainer" unique_id=543617876 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(62, 60)
+player = NodePath("../Player")
+
+[node name="BasicEnemy2" parent="ActorContainer" unique_id=255007344 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(21, 58)
+player = NodePath("../Player")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1111736331]
 position = Vector2(50, 32)
