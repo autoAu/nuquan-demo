@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://b2ijhmj67ylrh" path="res://assets/art/backgrounds/street-background.png" id="1_7au5o"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7au5o"]
+size = Vector2(417, 32)
+
 [node name="Stage" type="Node2D" unique_id=294290009]
 
 [node name="BackGround" type="Node2D" parent="." unique_id=669911787]
@@ -9,3 +12,18 @@
 [node name="Sprite2D" type="Sprite2D" parent="BackGround" unique_id=469833096]
 texture = ExtResource("1_7au5o")
 centered = false
+
+[node name="WorldCollider" type="Node2D" parent="." unique_id=851352161]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="WorldCollider" unique_id=667523100]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldCollider/StaticBody2D" unique_id=794562333]
+position = Vector2(199, 16)
+shape = SubResource("RectangleShape2D_7au5o")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="WorldCollider" unique_id=1224149835]
+position = Vector2(-5, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldCollider/StaticBody2D2" unique_id=507535735]
+position = Vector2(205, 17)
+shape = SubResource("RectangleShape2D_7au5o")

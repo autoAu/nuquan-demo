@@ -1,13 +1,103 @@
 [gd_scene format=3 uid="uid://sjtnkdp7bob0"]
 
 [ext_resource type="PackedScene" uid="uid://doeh47f2ysf4t" path="res://character/character.tscn" id="1_2orxn"]
+[ext_resource type="Script" uid="uid://dp5pgsusv8doy" path="res://character/player.gd" id="2_aypkh"]
 [ext_resource type="Texture2D" uid="uid://cxg8d6qg72u72" path="res://assets/art/characters/player.png" id="2_monf5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_monf5"]
 radius = 2.0
 height = 10.0
 
+[sub_resource type="Animation" id="Animation_monf5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_aypkh"]
+resource_name = "idle"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_hhoun"]
+resource_name = "punch"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_bdyh8"]
+resource_name = "walk"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qe16m"]
+_data = {
+&"RESET": SubResource("Animation_monf5"),
+&"idle": SubResource("Animation_aypkh"),
+&"punch": SubResource("Animation_hhoun"),
+&"walk": SubResource("Animation_bdyh8")
+}
+
 [node name="Player" unique_id=1136997134 instance=ExtResource("1_2orxn")]
+script = ExtResource("2_aypkh")
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
 texture = ExtResource("2_monf5")
@@ -20,3 +110,6 @@ vframes = 10
 position = Vector2(0, -1)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_monf5")
+
+[node name="AnimationPlayer" parent="." index="3" unique_id=855980877]
+libraries/ = SubResource("AnimationLibrary_qe16m")
