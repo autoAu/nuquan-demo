@@ -18,6 +18,8 @@ y_sort_enabled = true
 
 [node name="Player" parent="ActorContainer" unique_id=1136997134 instance=ExtResource("2_fj7yv")]
 position = Vector2(40, 41)
+health = 50
+damage = 5
 speed = 40.0
 
 [node name="Barrel" parent="ActorContainer" unique_id=512899097 instance=ExtResource("3_tlwt5")]

@@ -6,10 +6,14 @@ extends CharacterBody2D
 
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
+@onready var damage_emitter := $DamageEmitter
 
-enum State {IDLE, WALK, ATTACK}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND}
 
 var state = State.IDLE
+
+func _ready() -> void:
+	damage_emitter.area_entered.connect(on_emit_damage.bind())
 
 func _process(delta: float) -> void:
 	flip_sprite()
@@ -42,8 +46,10 @@ func handle_animations() -> void:
 func flip_sprite() -> void:
 	if velocity.x > 0:
 		character_sprite.flip_h = false
+		damage_emitter.scale.x = 1
 	elif velocity.x < 0:
 		character_sprite.flip_h = true
+		damage_emitter.scale.x = -1
 		
 func can_move() -> bool:
 	return state == State.IDLE or state == State.WALK
@@ -53,3 +59,14 @@ func can_attack() -> bool:
 
 func on_action_complete() -> void:
 	state = State.IDLE
+
+func on_takeoff_complete() -> void:
+	state = State.JUMP
+
+func on_land_complete() -> void:
+	state = State.IDLE
+
+func on_emit_damage(damage_receiver: DamageReceiver) -> void:
+	var direction := Vector2.LEFT if damage_receiver.global_position.x < global_position.x else Vector2.RIGHT
+	damage_receiver.damage_received.emit(damage, direction)
+	

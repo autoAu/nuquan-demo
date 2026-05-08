@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cvv3rt3dg7d2d"]
+
+[node name="DamageEmitter" type="Area2D" unique_id=366140428]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1138871281]
