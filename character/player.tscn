@@ -68,6 +68,35 @@ tracks/0/keys = {
 "values": [62]
 }
 
+[sub_resource type="Animation" id="Animation_tpic6"]
+resource_name = "jumpkick"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [63]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_dkowc"]
 resource_name = "land"
 length = 0.05
@@ -83,6 +112,32 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [60]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_land_complete"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_hhoun"]
@@ -108,7 +163,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.1),
+"times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -122,7 +177,7 @@ tracks/2/path = NodePath("DamageEmitter:monitoring")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.099902175),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -143,6 +198,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [61]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_takeoff_complete"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_bdyh8"]
@@ -167,6 +236,7 @@ _data = {
 &"RESET": SubResource("Animation_monf5"),
 &"idle": SubResource("Animation_aypkh"),
 &"jump": SubResource("Animation_qe16m"),
+&"jumpkick": SubResource("Animation_tpic6"),
 &"land": SubResource("Animation_dkowc"),
 &"punch": SubResource("Animation_hhoun"),
 &"takeoff": SubResource("Animation_pw6nv"),
@@ -177,6 +247,7 @@ _data = {
 size = Vector2(10, 6)
 
 [node name="Player" unique_id=1136997134 instance=ExtResource("1_2orxn")]
+jump_intensity = 150.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
 texture = ExtResource("2_monf5")
