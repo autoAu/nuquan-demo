@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://sjtnkdp7bob0"]
+
+[ext_resource type="PackedScene" uid="uid://doeh47f2ysf4t" path="res://character/character.tscn" id="1_2orxn"]
+[ext_resource type="Texture2D" uid="uid://cxg8d6qg72u72" path="res://assets/art/characters/player.png" id="2_monf5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_monf5"]
+radius = 2.0
+height = 10.0
+
+[node name="Player" unique_id=1136997134 instance=ExtResource("1_2orxn")]
+
+[node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
+texture = ExtResource("2_monf5")
+centered = false
+offset = Vector2(-24, -49)
+hframes = 10
+vframes = 10
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=622436207]
+position = Vector2(0, -1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_monf5")

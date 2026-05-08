@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://doeh47f2ysf4t"]
+
+[ext_resource type="Texture2D" uid="uid://d0jo43xa8ljw5" path="res://assets/art/characters/shadow.png" id="1_yf0e5"]
+
+[node name="Character" type="CharacterBody2D" unique_id=1136997134]
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=875196974]
+texture = ExtResource("1_yf0e5")
+
+[node name="CharacterSprite" type="Sprite2D" parent="." unique_id=1205349959]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=622436207]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=855980877]
