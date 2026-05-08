@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dpunp5xvplgj1"]
+
+[node name="World" type="Node2D" unique_id=1656730590]
+
+[node name="Label" type="Label" parent="." unique_id=723132855]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "gooooodssss
+"
