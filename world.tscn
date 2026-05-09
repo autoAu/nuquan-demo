@@ -24,11 +24,23 @@ position = Vector2(40, 41)
 position = Vector2(79, 45)
 
 [node name="BasicEnemy" parent="ActorContainer" unique_id=543617876 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(62, 60)
+position = Vector2(54, 61)
 player = NodePath("../Player")
 
 [node name="BasicEnemy2" parent="ActorContainer" unique_id=255007344 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(21, 58)
+player = NodePath("../Player")
+
+[node name="BasicEnemy3" parent="ActorContainer" unique_id=417807641 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(114, 53)
+player = NodePath("../Player")
+
+[node name="BasicEnemy4" parent="ActorContainer" unique_id=1537333618 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(41, 89)
+player = NodePath("../Player")
+
+[node name="BasicEnemy5" parent="ActorContainer" unique_id=1644283684 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(85, 62)
 player = NodePath("../Player")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1111736331]

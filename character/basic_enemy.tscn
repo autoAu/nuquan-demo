@@ -23,6 +23,40 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_jf65r"]
+resource_name = "fall"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [51]
+}
+
+[sub_resource type="Animation" id="Animation_30xyd"]
+resource_name = "grounded"
+length = 0.001
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [52]
+}
+
 [sub_resource type="Animation" id="Animation_p73c2"]
 resource_name = "hurt"
 length = 0.3
@@ -71,6 +105,37 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_pvf5d"]
+resource_name = "land"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [70]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_land_complete"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_y340o"]
 resource_name = "walk"
 length = 0.8
@@ -91,8 +156,11 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p73c2"]
 _data = {
 &"RESET": SubResource("Animation_8u7dt"),
+&"fall": SubResource("Animation_jf65r"),
+&"grounded": SubResource("Animation_30xyd"),
 &"hurt": SubResource("Animation_p73c2"),
 &"idle": SubResource("Animation_12mcf"),
+&"land": SubResource("Animation_pvf5d"),
 &"walk": SubResource("Animation_y340o")
 }
 
@@ -108,7 +176,9 @@ collision_mask = 12
 script = ExtResource("2_12mcf")
 max_health = 20
 damage = 2
+knockdown_intensity = 70.0
 knockback_intensity = 50.0
+duration_grounded = 1000.0
 speed = 30.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
