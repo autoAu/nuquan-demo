@@ -21,9 +21,9 @@ extends CharacterBody2D
 
 const GRAVITY := 600
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK}
 
-var anim_attack := ["punch", "punch_alt", "kick", "roundkick",]
+var anim_attack := []
 
 var anim_map :={
 	State.IDLE: "idle",
@@ -37,6 +37,7 @@ var anim_map :={
 	State.GROUNDED: "grounded",
 	State.DEATH: "grounded",
 	State.FLY: "fly",
+	State.PREP_ATTACK: "idle"
 }
 
 var attack_combo_index := 0
@@ -63,6 +64,7 @@ func _process(delta: float) -> void:
 	handle_grounded()
 	handle_death(delta)
 	handle_input()
+	handle_prep_attack()
 	set_heading()
 	collision_shape.disabled = is_collision_disabled()
 	character_sprite.position = Vector2.UP * height
@@ -76,6 +78,9 @@ func handle_movement() -> void:
 			state = State.WALK
 
 func handle_input() -> void:
+	pass
+
+func handle_prep_attack() -> void:
 	pass
 
 func handle_grounded() -> void:
@@ -163,7 +168,7 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 		else:
 			state = State.HURT
 			velocity = knockback_intensity * direction
-			
+	
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
 	var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
@@ -175,13 +180,13 @@ func on_emit_damage(receiver: DamageReceiver) -> void:
 		current_damage = damage_power
 	receiver.damage_received.emit(current_damage, direction, hit_type)
 	is_last_hit_successful = true
-
+	
 func on_emit_collateral_damage(receiver : DamageReceiver) -> void:
 	if receiver != DamageReceiver:
 		var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
 		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCKDOWN)
 
-func on_wall_hit(wall : AnimatableBody2D) -> void:
+func on_wall_hit(_wall : AnimatableBody2D) -> void:
 	state = State.FALL
 	height_speed = knockdown_intensity
 	velocity = -velocity / 2.0

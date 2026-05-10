@@ -36,6 +36,71 @@ tracks/1/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_ps75u"]
+resource_name = "fall"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [80]
+}
+
+[sub_resource type="Animation" id="Animation_3u2u7"]
+resource_name = "grounded"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [82]
+}
+
+[sub_resource type="Animation" id="Animation_j51ly"]
+resource_name = "hurt"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [70, 71, 72]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_aypkh"]
 resource_name = "idle"
 length = 0.4
@@ -365,6 +430,9 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qe16m"]
 _data = {
 &"RESET": SubResource("Animation_monf5"),
+&"fall": SubResource("Animation_ps75u"),
+&"grounded": SubResource("Animation_3u2u7"),
+&"hurt": SubResource("Animation_j51ly"),
 &"idle": SubResource("Animation_aypkh"),
 &"jump": SubResource("Animation_qe16m"),
 &"jumpkick": SubResource("Animation_tpic6"),
@@ -381,7 +449,7 @@ _data = {
 size = Vector2(10, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hhoun"]
-size = Vector2(7, 7)
+size = Vector2(10, 10)
 
 [node name="Player" unique_id=1136997134 instance=ExtResource("1_2orxn")]
 collision_layer = 2
@@ -418,7 +486,7 @@ position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_aypkh")
 
 [node name="DamageReceiver" parent="." index="5" unique_id=295269071]
-position = Vector2(1, -19)
+position = Vector2(0, -13)
 collision_layer = 16
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=785931373]
