@@ -22,6 +22,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollateralDamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_jf65r"]
 resource_name = "fall"
@@ -38,6 +50,47 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [51]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollateralDamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_jirtk"]
+resource_name = "fly"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [50]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollateralDamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_30xyd"]
@@ -59,8 +112,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_p73c2"]
 resource_name = "hurt"
-length = 0.3
-step = 0.1
+length = 0.15
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -68,7 +121,7 @@ tracks/0/path = NodePath("CharacterSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
+"times": PackedFloat32Array(0, 0.05, 0.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [40, 41, 42]
@@ -80,7 +133,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.15),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -157,6 +210,7 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_8u7dt"),
 &"fall": SubResource("Animation_jf65r"),
+&"fly": SubResource("Animation_jirtk"),
 &"grounded": SubResource("Animation_30xyd"),
 &"hurt": SubResource("Animation_p73c2"),
 &"idle": SubResource("Animation_12mcf"),
@@ -170,14 +224,18 @@ size = Vector2(6, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_12mcf"]
 size = Vector2(10, 10)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p73c2"]
+size = Vector2(6, 6)
+
 [node name="BasicEnemy" unique_id=1136997134 instance=ExtResource("1_fsll6")]
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_12mcf")
 max_health = 20
 damage = 2
+fly_speed = 100
 knockdown_intensity = 70.0
-knockback_intensity = 50.0
+knockback_intensity = 20.0
 duration_grounded = 1000.0
 speed = 30.0
 
@@ -210,5 +268,13 @@ collision_layer = 32
 [node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=785931373]
 shape = SubResource("RectangleShape2D_12mcf")
 
+[node name="CollateralDamageEmitter" parent="." index="6" unique_id=1827164225]
+position = Vector2(0, -9)
+collision_mask = 160
+
+[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0" unique_id=1138871281]
+shape = SubResource("RectangleShape2D_p73c2")
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]

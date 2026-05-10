@@ -21,5 +21,8 @@ texture = ExtResource("1_yf0e5")
 
 [node name="DamageReceiver" parent="." unique_id=295269071 instance=ExtResource("4_hx151")]
 
+[node name="CollateralDamageEmitter" parent="." unique_id=1827164225 instance=ExtResource("2_1l1n4")]
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]
