@@ -2,6 +2,8 @@ class_name Character
 extends CharacterBody2D
 
 @export var can_respawn : bool
+@export var can_respawn_knife : bool
+@export var has_knife : bool
 @export var max_health : int
 @export var damage : int
 @export var damage_power : int
@@ -10,6 +12,7 @@ extends CharacterBody2D
 @export var knockdown_intensity: float
 @export var knockback_intensity: float
 @export var duration_grounded: float
+@export var duration_between_knife_respawn: int
 @export var speed : float
 
 @onready var animation_player := $AnimationPlayer
@@ -18,10 +21,12 @@ extends CharacterBody2D
 @onready var collateral_damage_emitter :Area2D = $CollateralDamageEmitter
 @onready var damage_emitter := $DamageEmitter
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
+@onready var knife_sprite := $KnifeSprite
+@onready var projectile_aim := $ProjectileAim
 
 const GRAVITY := 600
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK,THROW}
 
 var anim_attack := []
 
@@ -37,7 +42,8 @@ var anim_map :={
 	State.GROUNDED: "grounded",
 	State.DEATH: "grounded",
 	State.FLY: "fly",
-	State.PREP_ATTACK: "idle"
+	State.PREP_ATTACK: "idle",
+	State.THROW: "throw",
 }
 
 var attack_combo_index := 0
@@ -48,6 +54,7 @@ var height_speed: float
 var is_last_hit_successful := false
 var state = State.IDLE
 var time_since_grounded := Time.get_ticks_msec()
+var time_since_knife_dismiss := Time.get_ticks_msec()
 
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
@@ -65,8 +72,11 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	handle_input()
 	handle_prep_attack()
+	handle_knife_respawn()
 	set_heading()
+	knife_sprite.visible = has_knife
 	collision_shape.disabled = is_collision_disabled()
+	knife_sprite.position = Vector2.UP *height
 	character_sprite.position = Vector2.UP * height
 	move_and_slide()
 
@@ -116,16 +126,24 @@ func handle_air_time(delta: float) -> void:
 		else:
 			height_speed -= GRAVITY * delta
 
+func handle_knife_respawn() -> void:
+	if can_respawn_knife and not has_knife and (Time.get_ticks_msec() - time_since_knife_dismiss) > duration_between_knife_respawn:
+		has_knife = true
+
 func set_heading() -> void:
 	pass
 
 func flip_sprite() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
+		knife_sprite.flip_h = false
 		damage_emitter.scale.x = 1
+		projectile_aim.scale.x = 1
 	else:
 		character_sprite.flip_h = true
+		knife_sprite.flip_h = true
 		damage_emitter.scale.x = -1
+		projectile_aim.scale.x = -1
 		
 func can_move() -> bool:
 	return state == State.IDLE or state == State.WALK
@@ -140,13 +158,17 @@ func can_jumpkick() -> bool:
 	return state == State.JUMP
 
 func can_get_hurt() -> bool:
-	return [State.IDLE, State.WALK, State.ATTACK, State.JUMP, State.LAND].has(state)
+	return [State.IDLE, State.WALK, State.ATTACK, State.LAND].has(state)
 
 func is_collision_disabled() -> bool:
 	return [State.GROUNDED, State.FALL, State.FLY].has(state)
 
 func on_action_complete() -> void:
 	state = State.IDLE
+
+func on_throw_complete() -> void:
+	state = State.IDLE
+	has_knife = false
 
 func on_takeoff_complete() -> void:
 	state = State.JUMP
@@ -157,6 +179,9 @@ func on_land_complete() -> void:
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
 	if can_get_hurt():
+		if has_knife:
+			has_knife = false
+			time_since_knife_dismiss = Time.get_ticks_msec()
 		current_health = clamp(current_health - amount, 0, max_health)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
@@ -164,7 +189,7 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 			velocity = knockback_intensity * direction
 		elif hit_type == DamageReceiver.HitType.POWER:
 			state = State.FLY
-			velocity = direction * fly_speed	
+			velocity = direction * fly_speed
 		else:
 			state = State.HURT
 			velocity = knockback_intensity * direction

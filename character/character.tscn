@@ -23,6 +23,12 @@ texture = ExtResource("1_yf0e5")
 
 [node name="CollateralDamageEmitter" parent="." unique_id=1827164225 instance=ExtResource("2_1l1n4")]
 
+[node name="KnifeSprite" type="Sprite2D" parent="." unique_id=1737600776]
+
+[node name="ProjectileAim" type="RayCast2D" parent="." unique_id=997969869]
+target_position = Vector2(100, 0)
+collision_mask = 0
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]
