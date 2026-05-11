@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://sjtnkdp7bob0" path="res://character/player.tscn" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cied00xqkcwuh" path="res://props/barrel.tscn" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c80sfcaehn67q" path="res://character/basic_enemy.tscn" id="5_036b0"]
+[ext_resource type="PackedScene" uid="uid://cicbgwjfla1rk" path="res://props/knife.tscn" id="6_dwbse"]
+[ext_resource type="PackedScene" uid="uid://dftq45ds510tt" path="res://character/goon_enemy.tscn" id="7_pkg7o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqk2v"]
 size = Vector2(6, 64)
@@ -26,14 +28,19 @@ knockback_intensity = 10.0
 position = Vector2(79, 45)
 
 [node name="BasicEnemy" parent="ActorContainer" unique_id=543617876 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(63, 58)
+position = Vector2(56, 59)
 duration_between_melee_attacks = 2000
 duration_between_range_attacks = 4000
 duration_prep_melee_attack = 500
 duration_prep_range_attack = 500
 player = NodePath("../Player")
-can_respawn_knife = true
-duration_between_knife_respawn = 2000
+
+[node name="GoonEnemy" parent="ActorContainer" unique_id=1251358422 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
+position = Vector2(90, 51)
+player = NodePath("../Player")
+
+[node name="Knife" parent="ActorContainer" unique_id=14056321 instance=ExtResource("6_dwbse")]
+position = Vector2(24, 55)
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1111736331]
 position = Vector2(50, 32)

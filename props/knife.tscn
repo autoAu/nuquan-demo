@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://cicbgwjfla1rk"]
+
+[ext_resource type="PackedScene" uid="uid://bhoqkesf1d38r" path="res://props/collctible.tscn" id="1_qk1bt"]
+[ext_resource type="Script" uid="uid://ckmw2rix2unns" path="res://props/knife.gd" id="2_dq0df"]
+[ext_resource type="Texture2D" uid="uid://dir1452cjvhn7" path="res://assets/art/props/knife.png" id="3_qakv4"]
+[ext_resource type="Texture2D" uid="uid://bn2irjt8ujixn" path="res://assets/art/props/prop-shadow.png" id="4_atj83"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbi6p"]
+
+[sub_resource type="Animation" id="Animation_sjcbv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollctibleSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollctibleSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -8)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_dq0df"]
+resource_name = "fall"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollctibleSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0.0, 1.5707964, 3.1415927, 4.712389]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_uyeuj"]
+resource_name = "fly"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollctibleSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_p5f3d"]
+resource_name = "grounded"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollctibleSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5707964]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollctibleSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -8)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qakv4"]
+_data = {
+&"RESET": SubResource("Animation_sjcbv"),
+&"fall": SubResource("Animation_dq0df"),
+&"fly": SubResource("Animation_uyeuj"),
+&"grounded": SubResource("Animation_p5f3d")
+}
+
+[node name="Knife" unique_id=14056321 instance=ExtResource("1_qk1bt")]
+script = ExtResource("2_dq0df")
+speed = 100.0
+knockdown_intensity = 120.0
+
+[node name="CollctibleSprite" parent="." index="0" unique_id=569544332]
+position = Vector2(0, -8)
+texture = ExtResource("3_qakv4")
+centered = false
+offset = Vector2(-8, -8)
+
+[node name="ShadowSprite" parent="." index="1" unique_id=1307851223]
+texture = ExtResource("4_atj83")
+centered = false
+offset = Vector2(-3, -1)
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1781913247]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_pbi6p")
+
+[node name="AnimationPlayer" parent="." index="3" unique_id=1277715804]
+libraries/ = SubResource("AnimationLibrary_qakv4")
+autoplay = &"fall"

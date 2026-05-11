@@ -4,7 +4,7 @@ extends StaticBody2D
 @onready var sprite := $Sprite2D
 @export var knockback_intensity :float
 
-const GRAVITY := 600
+const GRAVITY := 600.0
 
 enum State {IDLE, DESTROYED}
 

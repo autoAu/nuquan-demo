@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bhoqkesf1d38r"]
+
+[ext_resource type="PackedScene" uid="uid://cvv3rt3dg7d2d" path="res://collider/damage_emitter.tscn" id="1_aksff"]
+
+[node name="Collctible" type="Area2D" unique_id=14056321]
+collision_layer = 256
+collision_mask = 6
+monitoring = false
+monitorable = false
+
+[node name="CollctibleSprite" type="Sprite2D" parent="." unique_id=569544332]
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=1307851223]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1781913247]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1277715804]
+
+[node name="DamageEmitter" parent="." unique_id=366140428 instance=ExtResource("1_aksff")]

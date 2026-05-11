@@ -286,6 +286,49 @@ tracks/2/keys = {
 "values": [70]
 }
 
+[sub_resource type="Animation" id="Animation_sy3b4"]
+resource_name = "pickup"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [70]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KnifeSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [70]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_pickup_complete"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_po0up"]
 resource_name = "punch"
 length = 0.2
@@ -477,6 +520,7 @@ _data = {
 &"hurt": SubResource("Animation_p73c2"),
 &"idle": SubResource("Animation_12mcf"),
 &"land": SubResource("Animation_pvf5d"),
+&"pickup": SubResource("Animation_sy3b4"),
 &"punch": SubResource("Animation_po0up"),
 &"punch_alt": SubResource("Animation_g7obi"),
 &"throw": SubResource("Animation_1mstm"),
@@ -491,6 +535,9 @@ size = Vector2(10, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p73c2"]
 size = Vector2(6, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jf65r"]
+size = Vector2(3, 3)
 
 [node name="BasicEnemy" unique_id=1136997134 instance=ExtResource("1_fsll6")]
 collision_layer = 4
@@ -522,6 +569,7 @@ shape = SubResource("CapsuleShape2D_12mcf")
 
 [node name="AnimationPlayer" parent="." index="3" unique_id=855980877]
 libraries/ = SubResource("AnimationLibrary_p73c2")
+autoplay = &"idle"
 
 [node name="DamageEmitter" parent="." index="4" unique_id=366140428]
 position = Vector2(0, -13)
@@ -555,6 +603,13 @@ frame = 51
 
 [node name="ProjectileAim" parent="." index="8" unique_id=997969869]
 collision_mask = 2
+
+[node name="CollectibleSensor" parent="." index="9" unique_id=1631612848]
+collision_mask = 256
+
+[node name="CollisionShape2D" parent="CollectibleSensor" index="0" unique_id=1280963059]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_jf65r")
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

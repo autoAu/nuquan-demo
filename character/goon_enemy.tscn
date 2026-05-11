@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dftq45ds510tt"]
+
+[ext_resource type="PackedScene" uid="uid://c80sfcaehn67q" path="res://character/basic_enemy.tscn" id="1_mumsx"]
+[ext_resource type="Texture2D" uid="uid://cjlullb74g6ng" path="res://assets/art/characters/enemy_goon.png" id="2_fd683"]
+
+[node name="GoonEnemy" unique_id=1136997134 instance=ExtResource("1_mumsx")]
+duration_between_melee_attacks = 3000
+duration_between_range_attacks = 1500
+duration_prep_melee_attack = 800
+duration_prep_range_attack = 500
+can_respawn_knife = true
+has_knife = true
+max_health = 15
+damage = 1
+fly_speed = 120
+duration_grounded = 700.0
+duration_between_knife_respawn = 1000
+
+[node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
+texture = ExtResource("2_fd683")
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]
