@@ -24,6 +24,7 @@ extends CharacterBody2D
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
 @onready var projectile_aim := $ProjectileAim
+@onready var weapon_position := $KnifeSprite/WeaponPosition
 
 const GRAVITY := 600.0
 
@@ -80,6 +81,7 @@ func _process(delta: float) -> void:
 	collision_shape.disabled = is_collision_disabled()
 	knife_sprite.position = Vector2.UP *height
 	character_sprite.position = Vector2.UP * height
+	damage_receiver.monitorable = can_get_hurt()
 	move_and_slide()
 
 func handle_movement() -> void:
@@ -138,12 +140,12 @@ func set_heading() -> void:
 func flip_sprite() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
-		knife_sprite.flip_h = false
+		knife_sprite.scale.x = 1
 		damage_emitter.scale.x = 1
 		projectile_aim.scale.x = 1
 	else:
 		character_sprite.flip_h = true
-		knife_sprite.flip_h = true
+		knife_sprite.scale.x = -1
 		damage_emitter.scale.x = -1
 		projectile_aim.scale.x = -1
 		
@@ -166,14 +168,14 @@ func can_pickup_collectible() -> bool:
 	var collectible_areas := collectible_sensor.get_overlapping_areas()
 	if collectible_areas.size() == 0:
 		return false
-	var collectible : Collctible = collectible_areas[0]
+	var collectible : Collectible = collectible_areas[0]
 	if collectible.type == collectible.Type.KNIFE and not has_knife:
 		return true
 	return false
 
 func pickup_collectible() -> void:
 	var collectible_areas := collectible_sensor.get_overlapping_areas()
-	var collectible : Collctible = collectible_areas[0]
+	var collectible : Collectible = collectible_areas[0]
 	if collectible.type == collectible.Type.KNIFE and not has_knife:
 		has_knife = true
 		
@@ -188,6 +190,9 @@ func on_action_complete() -> void:
 func on_throw_complete() -> void:
 	state = State.IDLE
 	has_knife = false
+	var knife_global_position := Vector2(weapon_position.global_position.x, global_position.y)
+	var knife_height :float = -weapon_position.position.y
+	EntityManager.spawn_collectible.emit(Collectible.Type.KNIFE, Collectible.State.FLY, knife_global_position, heading, knife_height)
 
 func on_takeoff_complete() -> void:
 	state = State.JUMP

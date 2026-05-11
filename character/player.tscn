@@ -721,6 +721,7 @@ max_health = 30
 damage = 5
 damage_power = 8
 jump_intensity = 150.0
+duration_grounded = 700.0
 speed = 40.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1205349959]
@@ -756,16 +757,16 @@ shape = SubResource("RectangleShape2D_hhoun")
 [node name="EnemySlots" type="Node2D" parent="." index="6" unique_id=316462106]
 
 [node name="EnemySlot" parent="EnemySlots" index="0" unique_id=1320108568 instance=ExtResource("4_hhoun")]
-position = Vector2(17, 3)
+position = Vector2(14, 3)
 
 [node name="EnemySlot2" parent="EnemySlots" index="1" unique_id=136464095 instance=ExtResource("4_hhoun")]
-position = Vector2(17, -4)
+position = Vector2(14, -4)
 
 [node name="EnemySlot3" parent="EnemySlots" index="2" unique_id=948528499 instance=ExtResource("4_hhoun")]
-position = Vector2(-17, 3)
+position = Vector2(-14, 3)
 
 [node name="EnemySlot4" parent="EnemySlots" index="3" unique_id=1100459724 instance=ExtResource("4_hhoun")]
-position = Vector2(-17, -4)
+position = Vector2(-14, -4)
 
 [node name="KnifeSprite" parent="." index="8" unique_id=1737600776]
 texture = ExtResource("5_bdyh8")
@@ -774,6 +775,9 @@ offset = Vector2(-24, -48)
 hframes = 10
 vframes = 10
 frame = 80
+
+[node name="WeaponPosition" parent="KnifeSprite" index="0" unique_id=287898570]
+position = Vector2(17, -14)
 
 [node name="CollectibleSensor" parent="." index="10" unique_id=1631612848]
 position = Vector2(0, -1)

@@ -15,6 +15,10 @@ run/main_scene="uid://dpunp5xvplgj1"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+EntityManager="*uid://piyywm011hdc"
+
 [display]
 
 window/size/viewport_width=100
@@ -47,7 +51,7 @@ jump={
 2d_physics/layer_6="EnemyDamageReceiver"
 2d_physics/layer_7="DestructibleDamageReceiver"
 2d_physics/layer_8="InvisiableWall"
-2d_physics/layer_9="Collctible"
+2d_physics/layer_9="Collectible"
 
 [physics]
 

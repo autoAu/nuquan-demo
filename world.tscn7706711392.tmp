@@ -30,19 +30,18 @@ knockback_intensity = 10.0
 position = Vector2(79, 45)
 
 [node name="BasicEnemy" parent="ActorContainer" unique_id=543617876 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(41, 65)
+position = Vector2(56, 59)
 duration_between_melee_attacks = 2000
 duration_between_range_attacks = 4000
 duration_prep_melee_attack = 500
 duration_prep_range_attack = 500
 player = NodePath("../Player")
 
-[node name="GoonEnemy" parent="ActorContainer" unique_id=671918793 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
-position = Vector2(69, 58)
+[node name="GoonEnemy" parent="ActorContainer" unique_id=1251358422 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
+position = Vector2(90, 51)
 player = NodePath("../Player")
 
 [node name="Knife" parent="ActorContainer" unique_id=14056321 instance=ExtResource("6_dwbse")]
-position = Vector2(20, 54)
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1111736331]
 position = Vector2(50, 32)

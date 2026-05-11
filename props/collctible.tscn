@@ -2,13 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://cvv3rt3dg7d2d" path="res://collider/damage_emitter.tscn" id="1_aksff"]
 
-[node name="Collctible" type="Area2D" unique_id=14056321]
+[node name="Collectible" type="Area2D" unique_id=14056321]
 collision_layer = 256
 collision_mask = 6
 monitoring = false
 monitorable = false
 
-[node name="CollctibleSprite" type="Sprite2D" parent="." unique_id=569544332]
+[node name="CollectibleSprite" type="Sprite2D" parent="." unique_id=569544332]
 
 [node name="ShadowSprite" type="Sprite2D" parent="." unique_id=1307851223]
 
