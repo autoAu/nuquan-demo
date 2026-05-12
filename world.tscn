@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://c80sfcaehn67q" path="res://character/basic_enemy.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://cicbgwjfla1rk" path="res://props/knife.tscn" id="6_dwbse"]
 [ext_resource type="PackedScene" uid="uid://dftq45ds510tt" path="res://character/goon_enemy.tscn" id="7_pkg7o"]
+[ext_resource type="PackedScene" uid="uid://ce2wvokowp811" path="res://props/shot.tscn" id="9_ioo17"]
+
+[sub_resource type="Gradient" id="Gradient_ioo17"]
+colors = PackedColorArray(1, 1, 1, 1, 0.92156863, 0.74509805, 0.3254902, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqk2v"]
 size = Vector2(6, 64)
@@ -29,20 +33,27 @@ knockback_intensity = 10.0
 [node name="Barrel" parent="ActorContainer" unique_id=512899097 instance=ExtResource("3_tlwt5")]
 position = Vector2(79, 45)
 
-[node name="BasicEnemy" parent="ActorContainer" unique_id=543617876 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(41, 65)
-duration_between_melee_attacks = 2000
-duration_between_range_attacks = 4000
-duration_prep_melee_attack = 500
-duration_prep_range_attack = 500
-player = NodePath("../Player")
-
-[node name="GoonEnemy" parent="ActorContainer" unique_id=671918793 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
-position = Vector2(69, 58)
-player = NodePath("../Player")
-
 [node name="Knife" parent="ActorContainer" unique_id=14056321 instance=ExtResource("6_dwbse")]
 position = Vector2(20, 54)
+
+[node name="GoonEnemy" parent="ActorContainer" unique_id=1710463906 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
+position = Vector2(81, 56)
+player = NodePath("../Player")
+can_respawn_knife = false
+has_knife = false
+has_gun = true
+damage_gunshot = 0
+
+[node name="BasicEnemy" parent="ActorContainer" unique_id=1748689296 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(63, 60)
+player = NodePath("../Player")
+has_gun = true
+
+[node name="Shot" parent="ActorContainer" unique_id=836631000 instance=ExtResource("9_ioo17")]
+position = Vector2(52, 48)
+points = PackedVector2Array(0, -20, 100, -20)
+width = 1.0
+gradient = SubResource("Gradient_ioo17")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1111736331]
 position = Vector2(50, 32)

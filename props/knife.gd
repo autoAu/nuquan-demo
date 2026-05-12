@@ -57,5 +57,5 @@ func on_emit_damage(receiver : DamageReceiver) -> void:
 	receiver.damage_received.emit(damage, direction, DamageReceiver.HitType.KNOCKDOWN)
 	queue_free()
 
-func on_exit_screen(wall: AnimatableBody2D) -> void:
+func on_exit_screen(_wall: AnimatableBody2D) -> void:
 	queue_free()

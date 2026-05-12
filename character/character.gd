@@ -4,7 +4,9 @@ extends CharacterBody2D
 @export var can_respawn : bool
 @export var can_respawn_knife : bool
 @export var has_knife : bool
+@export var has_gun : bool
 @export var max_health : int
+@export var damage_gunshot : int
 @export var damage : int
 @export var damage_power : int
 @export var jump_intensity: float
@@ -17,6 +19,7 @@ extends CharacterBody2D
 
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
+@onready var gun_sprite := $GunSprite
 @onready var collision_shape := $CollisionShape2D
 @onready var collateral_damage_emitter : Area2D = $CollateralDamageEmitter
 @onready var collectible_sensor : Area2D = $CollectibleSensor
@@ -28,7 +31,7 @@ extends CharacterBody2D
 
 const GRAVITY := 600.0
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PRE_SHOOT}
 
 var anim_attack := []
 
@@ -47,6 +50,8 @@ var anim_map :={
 	State.PREP_ATTACK: "idle",
 	State.THROW: "throw",
 	State.PICKUP: "pickup",
+	State.SHOOT: "shoot",
+	State.PRE_SHOOT: "idle",
 }
 
 var attack_combo_index := 0
@@ -75,12 +80,15 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	handle_input()
 	handle_prep_attack()
+	handle_pre_shoot()
 	handle_knife_respawn()
 	set_heading()
 	knife_sprite.visible = has_knife
+	gun_sprite.visible = has_gun
 	collision_shape.disabled = is_collision_disabled()
 	knife_sprite.position = Vector2.UP *height
 	character_sprite.position = Vector2.UP * height
+	gun_sprite.position = Vector2.UP *height
 	damage_receiver.monitorable = can_get_hurt()
 	move_and_slide()
 
@@ -95,6 +103,9 @@ func handle_input() -> void:
 	pass
 
 func handle_prep_attack() -> void:
+	pass
+
+func handle_pre_shoot() -> void:
 	pass
 
 func handle_grounded() -> void:
@@ -141,11 +152,13 @@ func flip_sprite() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
 		knife_sprite.scale.x = 1
+		gun_sprite.scale.x = 1
 		damage_emitter.scale.x = 1
 		projectile_aim.scale.x = 1
 	else:
 		character_sprite.flip_h = true
 		knife_sprite.scale.x = -1
+		gun_sprite.scale.x = -1
 		damage_emitter.scale.x = -1
 		projectile_aim.scale.x = -1
 		
@@ -171,14 +184,31 @@ func can_pickup_collectible() -> bool:
 	var collectible : Collectible = collectible_areas[0]
 	if collectible.type == collectible.Type.KNIFE and not has_knife:
 		return true
+	if collectible.type == collectible.Type.GUN and not has_gun:
+		return true
 	return false
+
+func shoot_gun() -> void:
+	state = State.SHOOT
+	velocity = Vector2.ZERO
+	var target_point := heading * (global_position.x + get_viewport_rect().size.x)
+	var target = projectile_aim.get_collider()
+	if target != null:
+		target_point = projectile_aim.get_collision_point()
+		target.on_receive_damage(damage_gunshot, heading, DamageReceiver.HitType.KNOCKDOWN)
+	var weapon_root_position := Vector2(weapon_position.global_position.x, position.y)
+	var weapon_height = -weapon_position.position.y
+	var distance = target_point.x - weapon_position.global_position.x
+	EntityManager.spawn_shot.emit(weapon_root_position, distance, weapon_height)
+	
 
 func pickup_collectible() -> void:
 	var collectible_areas := collectible_sensor.get_overlapping_areas()
 	var collectible : Collectible = collectible_areas[0]
 	if collectible.type == collectible.Type.KNIFE and not has_knife:
 		has_knife = true
-		
+	if collectible.type == collectible.Type.GUN and not has_gun:
+		has_gun = true
 	collectible.queue_free()
 
 func is_collision_disabled() -> bool:
@@ -211,6 +241,8 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 		if has_knife:
 			has_knife = false
 			time_since_knife_dismiss = Time.get_ticks_msec()
+		if has_gun:
+			has_gun = false
 		current_health = clamp(current_health - amount, 0, max_health)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
